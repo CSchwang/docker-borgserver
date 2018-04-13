@@ -17,7 +17,7 @@ RUN apk add --no-cache \
     wget
 RUN /usr/bin/wget -O /usr/local/bin/borg https://github.com/borgbackup/borg/releases/download/1.1.5/borg-linux64
 RUN addgroup borg && \
-    adduser -D -s /bin/bash -G borg borg && \
+    adduser -D -s /bin/false -G borg borg && \
     mkdir /home/borg/.ssh && \
     chmod 700 /home/borg/.ssh && \
     chown borg: /home/borg/.ssh && \
