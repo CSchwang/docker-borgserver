@@ -22,7 +22,7 @@ RUN apk add --no-cache \
     apk del .build-deps 
 
 RUN addgroup borg && \
-    adduser -D -s /bin/false -G borg -h /home/borg borg && \
+    adduser -D -s /bin/sh -G borg -h /home/borg borg && \
     mkdir /home/borg/.ssh && \
     chmod 700 /home/borg/.ssh && \
     chown borg: /home/borg/.ssh && \
