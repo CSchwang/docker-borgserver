@@ -2,7 +2,7 @@
 # Dockerfile to build borgbackup server images
 # Based on Debian
 ############################################################
-FROM debian:latest
+FROM alpine:latest
 
 # Volume for SSH-Keys
 VOLUME /sshkeys
@@ -10,19 +10,26 @@ VOLUME /sshkeys
 # Volume for borg repositories
 VOLUME /backup
 
-ENV DEBIAN_FRONTEND noninteractive
-
-RUN apt-get update && apt-get -y --no-install-recommends install borgbackup openssh-server && apt-get clean
-RUN useradd -s /bin/bash -m borg ; \
-	mkdir /home/borg/.ssh && chmod 700 /home/borg/.ssh && chown borg: /home/borg/.ssh ; \
-	mkdir /run/sshd
-RUN rm -f /etc/ssh/ssh_host*key* ; \
-	rm -rf /var/lib/apt/lists/* /var/tmp/* /tmp/*
+RUN apk add --no-cache \
+    openssh-server \
+    openssh-server-pam \
+    ca-certificates \
+    wget
+RUN /usr/bin/wget -O /usr/local/bin/borg https://github.com/borgbackup/borg/releases/download/1.1.5/borg-linux64
+RUN addgroup borg && \
+    adduser -D -s /bin/bash -G borg borg && \
+    mkdir /home/borg/.ssh && \
+    chmod 700 /home/borg/.ssh && \
+    chown borg: /home/borg/.ssh && \
+    mkdir /run/sshd && \
+    chmod +x /usr/local/bin/borg
+RUN rm -f /etc/ssh/ssh_host*key* && \
+    rm -rf /var/tmp/* /tmp/*
 
 COPY ./data/run.sh /run.sh
 COPY ./data/sshd_config /etc/ssh/sshd_config
 
-ENTRYPOINT /run.sh
+ENTRYPOINT /bin/sh /run.sh
 
 # Default SSH-Port for clients
 EXPOSE 22
