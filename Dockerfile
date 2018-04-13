@@ -11,12 +11,16 @@ VOLUME /sshkeys
 VOLUME /backup
 
 RUN apk add --no-cache \
-    openssh-server \
-    openssh-server-pam \
-    ca-certificates \
-    wget
-RUN /usr/bin/wget -O /usr/local/bin/borg https://github.com/borgbackup/borg/releases/download/1.1.5/borg-linux64 && \
-    chmod +x /usr/local/bin/borg
+    openssh-server openssh-server-pam ca-certificates \
+    python3 lz4-libs libattr libacl libressl bash && \
+    apk add --no-cache --virtual .build-deps \
+        gcc libc-dev make pcre-dev zlib-dev \
+        python3-dev lz4-dev acl-dev attr-dev zstd-dev \
+        libressl-dev linux-headers && \
+    pip3 install --upgrade pip && \
+    pip3 install borgbackup==1.1.5 && \
+    apk del .build-deps 
+
 RUN addgroup borg && \
     adduser -D -s /bin/false -G borg borg && \
     mkdir /home/borg/.ssh && \
