@@ -12,7 +12,7 @@ VOLUME /backup
 
 RUN apk add --no-cache \
     openssh-server openssh-server-pam ca-certificates \
-    python3 lz4-libs libattr libacl libressl bash && \
+    python3 lz4-libs libattr libacl libressl zstd && \
     apk add --no-cache --virtual .build-deps \
         gcc libc-dev make pcre-dev zlib-dev \
         python3-dev lz4-dev acl-dev attr-dev zstd-dev \
@@ -22,7 +22,7 @@ RUN apk add --no-cache \
     apk del .build-deps 
 
 RUN addgroup borg && \
-    adduser -D -s /bin/false -G borg borg && \
+    adduser -D -s /bin/false -G borg -h /home/borg borg && \
     mkdir /home/borg/.ssh && \
     chmod 700 /home/borg/.ssh && \
     chown borg: /home/borg/.ssh && \
