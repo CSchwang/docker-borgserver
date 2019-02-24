@@ -18,7 +18,7 @@ RUN apk add --no-cache \
         python3-dev lz4-dev acl-dev attr-dev zstd-dev \
         libressl-dev cython cython-dev linux-headers && \
     pip3 install --upgrade pip && \
-    pip3 install borgbackup==1.1.7 && \
+    pip3 install borgbackup==1.1.9 && \
     apk del .build-deps 
 
 RUN addgroup borg && \
