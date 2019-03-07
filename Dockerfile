@@ -15,7 +15,7 @@ RUN apk add --no-cache \
     python3 lz4-libs libattr libacl libressl zstd && \
     apk add --no-cache --virtual .build-deps \
         gcc g++ libc-dev make pcre-dev zlib-dev \
-        python3-dev lz4-dev acl-dev attr-dev zstd-dev zstd-libs \
+        python3-dev lz4-dev acl-dev attr-dev zstd zstd-dev zstd-libs \
         libressl-dev cython cython-dev linux-headers && \
     pip3 install --upgrade pip && \
     pip3 install borgbackup==1.1.9 && \
