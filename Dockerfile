@@ -12,10 +12,10 @@ VOLUME /backup
 
 RUN apk add --no-cache \
     openssh-server openssh-server-pam ca-certificates \
-    python3 lz4-libs libattr libacl libressl zstd && \
+    python3 lz4-libs libattr libacl libressl zstd zstd-libs && \
     apk add --no-cache --virtual .build-deps \
         gcc g++ libc-dev make pcre-dev zlib-dev \
-        python3-dev lz4-dev acl-dev attr-dev zstd zstd-dev zstd-libs \
+        python3-dev lz4-dev acl-dev attr-dev zstd-dev \
         libressl-dev cython cython-dev linux-headers && \
     pip3 install --upgrade pip && \
     pip3 install borgbackup==1.1.9 && \
