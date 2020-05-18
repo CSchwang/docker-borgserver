@@ -1,5 +1,5 @@
 # Info
-This image is based on Nold360/docker-borgserver. It has been adapted to run on Alpine Linux. It will download borg V1.1.9
+This image is based on Nold360/docker-borgserver. It has been adapted to run on Alpine Linux. It will download borg V1.1.11
 
 
 # BorgServer - Docker image
